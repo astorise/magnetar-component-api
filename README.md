@@ -91,7 +91,8 @@ Runtimes.
 ## Measured
 
 On a copy of the Mistral Component moved onto this crate (contract 1.8.0): its
-12 tests pass, the `.wasm` validates as a Component, and the component's
+13 tests pass (the seven golden graphs recorded before the move among them, so
+the graphs it emits are unchanged), the `.wasm` validates as a Component, and the component's
 interface is the same as the one built from its own copy of the WIT (same
 imports, same exports, same types, in a different declaration order). The
 `.wasm` is 125,217 bytes against 122,630 (+2.1 %). The crate changes where
