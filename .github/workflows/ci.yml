@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main, claude/charming-lamport-1b9m74]
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+      - name: Install the pinned Rust toolchain and the Component target
+        run: |
+          rustup toolchain install 1.100.0 --profile minimal --component rustfmt --component clippy
+          rustup target add wasm32-wasip2 --toolchain 1.100.0
+      - name: Install wasm-tools
+        uses: taiki-e/install-action@d270f69d9016a914699316c97c419c84d5e96475 # wasm-tools
+      - name: The crate is in step with wit/
+        run: python3 scripts/sync.py --check
+      - name: Every version parses as WIT
+        run: |
+          for dir in wit/*/; do
+            wasm-tools component wit "$dir" > /dev/null
+          done
+      - name: A released version is never edited
+        if: github.event_name == 'pull_request'
+        run: |
+          base="origin/${{ github.base_ref }}"
+          changed=$(git diff --name-status "$base"...HEAD -- wit | awk '$1 != "A" && $2 != "wit/SHA256SUMS" && $2 != "wit/PROVENANCE.md"')
+          if [ -n "$changed" ]; then
+            echo "A file of a released version changed or was removed:"
+            echo "$changed"
+            exit 1
+          fi
+          if git diff "$base"...HEAD -- wit/SHA256SUMS | grep -E '^-[^-]'; then
+            echo "A recorded checksum changed or was removed."
+            exit 1
+          fi
+      - name: Check formatting
+        run: |
+          cargo +1.100.0 fmt -- --check
+          (cd examples/minimal-component && cargo +1.100.0 fmt -- --check)
+      - name: Clippy, Test and Build for each contract version
+        run: |
+          for dir in $(ls wit | grep -E '^[0-9]' | sort -V); do
+            feature="v$(echo "$dir" | cut -d. -f1)_$(echo "$dir" | cut -d. -f2)"
+            echo "::group::contract $dir ($feature)"
+            cargo +1.100.0 clippy --locked --all-targets --features "$feature" -- -D warnings
+            cargo +1.100.0 test --locked --features "$feature"
+            cargo +1.100.0 build --locked --features "$feature" --target wasm32-wasip2
+            echo "::endgroup::"
+          done
+      - name: Two versions together are refused
+        run: |
+          if cargo +1.100.0 build --locked --features v1_8,v1_9 2> /tmp/two.log; then
+            echo "two contract versions built together"; exit 1
+          fi
+          grep -q "enable exactly one contract-version feature" /tmp/two.log
+      - name: Documentation
+        env:
+          RUSTDOCFLAGS: -D warnings
+        run: cargo +1.100.0 doc --locked --no-deps --features v1_14
+      - name: Build the example Component and validate it
+        working-directory: examples/minimal-component
+        run: |
+          cargo +1.100.0 clippy --locked --all-targets -- -D warnings
+          cargo +1.100.0 build --locked --release --target wasm32-wasip2
+          wasm-tools validate target/wasm32-wasip2/release/minimal_component.wasm --features component-model

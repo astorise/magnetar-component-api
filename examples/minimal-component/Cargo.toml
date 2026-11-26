@@ -1,0 +1,19 @@
+[workspace]
+
+[package]
+name = "minimal-component"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+publish = false
+description = "The smallest Model Component: an embedding lookup. A template, not a model."
+rust-version = "1.98"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+# A Component names the contract version it targets with one feature, and in
+# its own repository pins this crate by commit:
+#   magnetar-component-api = { git = "https://github.com/astorise/magnetar-component-api", rev = "<commit>", features = ["v1_14"] }
+magnetar-component-api = { path = "../..", features = ["v1_14"] }

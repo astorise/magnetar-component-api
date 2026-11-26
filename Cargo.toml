@@ -1,0 +1,44 @@
+[workspace]
+
+[package]
+name = "magnetar-component-api"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "The Magnetar Model Component contract: every released version of the model-component-graph WIT package, and its guest bindings generated once."
+repository = "https://github.com/astorise/magnetar-component-api"
+readme = "README.md"
+keywords = ["ai", "inference", "magnetar"]
+categories = ["science", "wasm"]
+rust-version = "1.98"
+exclude = ["/.github"]
+
+[dependencies]
+wit-bindgen = { version = "0.63", optional = true }
+
+[features]
+# Each feature generates the guest bindings of one contract version, in the
+# module of the same name. A Component enables the one it targets.
+default = []
+# BEGIN versions
+v1_2 = ["dep:wit-bindgen"]
+v1_3 = ["dep:wit-bindgen"]
+v1_4 = ["dep:wit-bindgen"]
+v1_5 = ["dep:wit-bindgen"]
+v1_6 = ["dep:wit-bindgen"]
+v1_7 = ["dep:wit-bindgen"]
+v1_8 = ["dep:wit-bindgen"]
+v1_9 = ["dep:wit-bindgen"]
+v1_10 = ["dep:wit-bindgen"]
+v1_11 = ["dep:wit-bindgen"]
+v1_12 = ["dep:wit-bindgen"]
+v1_13 = ["dep:wit-bindgen"]
+v1_14 = ["dep:wit-bindgen"]
+# END versions
+
+[package.metadata.docs.rs]
+features = ["v1_14"]
+
+[dev-dependencies]
+sha2 = "0.10"
+wit-parser = "0.262"
