@@ -65,7 +65,7 @@ jobs:
       - name: Documentation
         env:
           RUSTDOCFLAGS: -D warnings
-        run: cargo +1.100.0 doc --locked --no-deps --features v1_14
+        run: cargo +1.100.0 doc --locked --no-deps --features v1_15
       - name: Build the example Component and validate it
         working-directory: examples/minimal-component
         run: |
