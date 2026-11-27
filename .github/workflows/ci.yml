@@ -20,7 +20,7 @@ jobs:
           rustup toolchain install 1.100.0 --profile minimal --component rustfmt --component clippy
           rustup target add wasm32-wasip2 --toolchain 1.100.0
       - name: Install wasm-tools
-        uses: taiki-e/install-action@d270f69d9016a914699316c97c419c84d5e96475 # wasm-tools
+        uses: taiki-e/install-action@39a0b1570a117ededf7f373a25a04e92fa1994b0 # wasm-tools
       - name: The crate is in step with wit/
         run: python3 scripts/sync.py --check
       - name: Every version parses as WIT
