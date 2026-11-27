@@ -42,4 +42,4 @@ features = ["v1_15"]
 
 [dev-dependencies]
 sha2 = "0.10"
-wit-parser = "0.262"
+wit-parser = "0.263"
