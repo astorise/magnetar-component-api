@@ -41,5 +41,5 @@ v1_15 = ["dep:wit-bindgen"]
 features = ["v1_15"]
 
 [dev-dependencies]
-sha2 = "0.10"
+sha2 = "0.11"
 wit-parser = "0.263"
