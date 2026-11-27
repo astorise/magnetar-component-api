@@ -12,10 +12,10 @@ Device or a native handle. This repository is what a Component's author
 needs to target the contract, without a checkout of Magnetar:
 
 - `wit/<version>/model-component-graph.wit`: each released version, `1.2.0` to
-  `1.15.0`, immutable once released. `wit/SHA256SUMS` records them and
+  `1.16.0`, immutable once released. `wit/SHA256SUMS` records them and
   `wit/PROVENANCE.md` says where each came from.
 - the Rust guest bindings of each version, behind one cargo feature per
-  version (`v1_15` for contract 1.15.0): a Component enables the one it
+  version (`v1_16` for contract 1.16.0): a Component enables the one it
   targets, and neither copies the WIT file nor runs the bindings generator.
 - the checks that make the contract's promise mechanical: a release only adds
   to the one before it, and a released file never changes.
@@ -34,11 +34,11 @@ records the commit, and the crate is published once it is stable.
 
 ```toml
 [dependencies]
-magnetar-component-api = { git = "https://github.com/astorise/magnetar-component-api", rev = "<commit>", features = ["v1_15"] }
+magnetar-component-api = { git = "https://github.com/astorise/magnetar-component-api", rev = "<commit>", features = ["v1_16"] }
 ```
 
 ```rust
-use magnetar_component_api::v1_15::{
+use magnetar_component_api::v1_16::{
     Guest, export,
     magnetar::model_component_graph::graph_builder as gb,
 };
