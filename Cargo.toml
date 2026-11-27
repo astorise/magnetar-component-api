@@ -34,10 +34,11 @@ v1_11 = ["dep:wit-bindgen"]
 v1_12 = ["dep:wit-bindgen"]
 v1_13 = ["dep:wit-bindgen"]
 v1_14 = ["dep:wit-bindgen"]
+v1_15 = ["dep:wit-bindgen"]
 # END versions
 
 [package.metadata.docs.rs]
-features = ["v1_14"]
+features = ["v1_15"]
 
 [dev-dependencies]
 sha2 = "0.10"
