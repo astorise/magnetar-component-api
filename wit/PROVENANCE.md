@@ -27,6 +27,7 @@ Versions 1.0.0 and 1.1.0 are not here: the Runtime serves 1.2.0 and later.
 | 1.13.0 | 2026-11-25 | [`ee59d7c`](https://github.com/astorise/Magnetar/commit/ee59d7ce35d53f4d9a5597fe37f5c09b4dc89fa6) | Run Qwen3.5's hybrid decoder on CPU and CUDA; Qwen4-Exp operators; CPU decode work; accelerator-package RFC (#231) |
 | 1.14.0 | 2026-11-25 | [`a6bcedd`](https://github.com/astorise/Magnetar/commit/a6bcedda134b65ce1580082093f9bace06578eb8) | Run Qwen4-Exp's blocks on the CPU Providers and against Transformers (model-config 1.14.0) (#234) |
 | 1.15.0 | 2026-11-27 | [`daec9e2`](https://github.com/astorise/Magnetar/commit/daec9e204401f96f05db5e8e96fe1481a528dd0a) | Ordered Mamba-2 hybrid decoder configuration, proposed in Magnetar #252. |
+| 1.16.0 | 2026-11-27 | [Magnetar #252](https://github.com/astorise/Magnetar/pull/252) | Runtime-bound copy-based KV history inputs and complete-history outputs. |
 
 From this repository on, a version is added here first; `SHA256SUMS` records
 its checksum and the files of a recorded version are never edited.
